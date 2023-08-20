@@ -28,5 +28,6 @@ https://nodejs.org/en/download/
 ![image](https://github.com/seunghunyu/reactStudy/assets/40010035/4b55aebf-660f-4e23-b605-5afd3b8262ef)
 
 Component를 상속받는 App Class에서 className이 App 인 태그를 return 해준다. 변수를 선언해주고 중괄호 사이에 변수값을 넣어주면 태그에서 사용이 가능하다. 
+
 ![image](https://github.com/seunghunyu/reactStudy/assets/40010035/867f3bdb-dd3f-4076-8659-db146d03cc22)
 
