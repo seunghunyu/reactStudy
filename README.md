@@ -20,3 +20,13 @@ https://nodejs.org/en/download/
 
    ![image](https://github.com/seunghunyu/reactStudy/assets/40010035/2ce24392-2d0d-46a1-b963-bcf493d32e8c)
 
+7.화면에 보이는 내용은 프로젝트폴더/public/index.html 의 내용이며 div 태그의 id가 root인 태그의 내용을 보여주는 것이다. 
+![image](https://github.com/seunghunyu/reactStudy/assets/40010035/23193979-be3f-43f0-94b3-5093c423a018)
+
+해당 태그를 그려 주는 부분은 src/index.js 에서 import 로 App.js 의 내용을 가져와서 render 부분의 App 태그를 사용하여 뿌려준다. 
+(import 시 js 파일확장자명은 생략 가능)
+![image](https://github.com/seunghunyu/reactStudy/assets/40010035/4b55aebf-660f-4e23-b605-5afd3b8262ef)
+
+Component를 상속받는 App Class에서 className이 App 인 태그를 return 해준다. 변수를 선언해주고 중괄호 사이에 변수값을 넣어주면 태그에서 사용이 가능하다. 
+![image](https://github.com/seunghunyu/reactStudy/assets/40010035/867f3bdb-dd3f-4076-8659-db146d03cc22)
+
