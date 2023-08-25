@@ -39,28 +39,39 @@ class App extends Component{
       <div className="App">
         {/* <h1>Hello World!</h1>
         Hello, React! */}
-        {/* <Subject 
+        <Subject 
           title={this.state.subject.title} 
           sub={this.state.subject.sub}>
-        </Subject> */}
-        <header>
-            {/* 일반적인 자바스크립트에서는 onclick 소문자로 입력 
-                하지만 리액트에서는 명명규칙상 onClick으로 사용
-            */}
+          onChangePage={function(e){
+            this.setState({mode:'welcome'})
+          }.bind(this)}  
+        </Subject>
+        {/* 일반적인 자바스크립트에서는 onclick 소문자로 입력 
+        하지만 리액트에서는 명명규칙상 onClick으로 사용 */}
+        {/* <header>
             <h1><a href="/" onClick={function(e) {
-                // alert("hi");
+                
                 console.log(e);
                 e.preventDefault(); // 화면 reload 되는 부분을 방지
                 
                 // this.state.mode = 'welcome' 호출시 에러 -> 이벤트 안에서 this에 아무것도 세팅 되어있지않기에 에러
                 // -> 함수가 끝나는 시점에 .bind(this) 코드 추가
-                this.setState({
-                  mode:'welcome'
-                });
+                // bind를 썼어도 this.state.mode 에 직접적인 값을 세팅을 하면 해당 값은 바뀌어도 
+                // state 의 변경사항을 알지 못하기에 아무 이벤트가 일어나지 않는다. 그렇기에 setState를 사용 -> this.state 방식으로 세팅할경우 생성자에서는 값이 제대로 먹힌다.
+                console.log(this.state.mode);
+                if(this.state.mode == 'welcome'){
+                  this.setState({
+                    mode:'read'
+                  });
+                }else{
+                  this.setState({
+                    mode:'welcome'
+                  });
+                }
                 // debugger; 해당 코드 호출시점에 breakpoint 거릶
             }.bind(this)}>{this.state.subject.title}</a></h1>
             {this.state.subject.sub}
-        </header>
+        </header> */}
         {/* <Subject title="React" sub="For UI"></Subject> */}
         <TOC data={this.state.contents}></TOC>
         {/* <Content 

@@ -7,7 +7,10 @@ class Subject extends Component{
         <header>
             {/* <h1>WEB</h1> */}
             {/* props 는 html tag 의 attribute 개념 */}
-            <h1><a href="/">{this.props.title}</a></h1>
+            <h1><a href="/" onClick={function(e){
+              e.preventDefault();
+              this.props.onChangePage();
+            }.bind(this)}>{this.props.title}</a></h1>
             {this.props.sub}
         </header>
     );
