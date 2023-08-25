@@ -73,7 +73,11 @@ class App extends Component{
             {this.state.subject.sub}
         </header> */}
         {/* <Subject title="React" sub="For UI"></Subject> */}
-        <TOC data={this.state.contents}></TOC>
+        <TOC onChangePage={function(){
+          alert('hi');
+          this.setState({mode:'read'});
+        }.bind(this)}
+        data={this.state.contents}></TOC>
         {/* <Content 
           title="HTML"
           desc="HTML is HyperText Markup Language" >
