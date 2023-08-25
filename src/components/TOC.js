@@ -9,11 +9,15 @@ class TOC extends Component{
       while(i < data.length){
         lists.push(
         <li key={data[i].id}>
-          <a href={"/contents/"+data[i].id}
-             onClick={function(e){
+          <a 
+             href={"/contents/"+data[i].id}
+             data-id={data[i].id}
+             onClick={function(id, num, e){   
                 e.preventDefault();
-                this.props.onChangePage();
-             }.bind(this)}
+                this.props.onChangePage(e.target.dataset.id);
+             }.bind(this, data[i].id, 10)}
+             //bind this 이후 파라미터에 값을 세팅하면 function 
+             //앞자리부터 파라미터를 추가로 받게해준다. 기존에 입력되어있던애들은 뒤로 하나씩 밀림 
           >{data[i].title}</a>
         </li>);
         i+=1;
