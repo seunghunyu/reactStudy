@@ -1,7 +1,11 @@
 // import logo from './logo.svg';
 import TOC from './components/TOC';
-import Content from './components/Content';
+// import Content from './components/Content';
+import ReadContent from './components/ReadContent';
+import CreateContent from './components/CreateContent';
+import UpdateContent from './components/UpdateContent';
 import Subject from './components/Subject';
+import Control from './components/Control';
 import './App.css';
 import { Component } from 'react';
 
@@ -14,8 +18,9 @@ import { Component } from 'react';
 class App extends Component{
   constructor(props){
     super(props);
+    this.max_content_id = 3;
     this.state = {
-      mode:'read',
+      mode:'welcome',
       selected_content_id:2,
       subject : {title : 'WEB', sub:'world wide web!'},
       welcome : {title:'Welcome', desc:'Hello, React!!'},
@@ -26,24 +31,74 @@ class App extends Component{
       ]
     }
   }
-  render(){
-    console.log("App Render!!");
-    var _title, _desc = null;
+  getReadContent(){
+    var i = 0;
+    while(i < this.state.contents.length){
+      var data = this.state.contents[i];
+      if(data.id === this.state.selected_content_id){
+        return data;
+      }
+      i+=1;
+    }
+   
+  }
+  getContent(){
+    var _title, _desc,_article = null;
     if(this.state.mode === 'welcome'){
       _title = this.state.welcome.title;
       _desc = this.state.welcome.desc;
-    }else if(this.state.mode === 'read'){
-      var i = 0;
-      while(i < this.state.contents.length){
-        var data = this.state.contents[i];
-        if(data.id === this.state.selected_content_id){
-          _title = data.title;
-          _desc = data.desc;
-          break;
+      _article = <ReadContent title={_title} desc={_desc}></ReadContent>;
+    } else if(this.state.mode === 'read'){
+      var _content = this.getReadContent();
+      _article = <ReadContent id = {_content.id} title={_content.title} desc={_content.desc}></ReadContent>;
+    } else if (this.state.mode === 'create'){
+      console.log('mode = create');
+      _article = <CreateContent onSubmit={function(_title, _desc){
+        //add content this.state.contents
+        // var newObj = new Object();
+        // newObj.id    = this.state.max_content_id + 1;
+        // newObj.title = _title;
+        // newObj.desc  = _desc;
+        // this.state.contents.push(newObj);
+        // var _contents = this.state.contents.concat(
+        //   {id:this.max_content_id+1 , title : _title, desc : _desc }
+        // );
+        this.max_content_id = this.max_content_id + 1;
+        var _contents = Array.from(this.state.contents);
+        _contents.push({id:this.max_content_id , title : _title, desc : _desc });
+        
+        this.setState({
+          contents : _contents,
+          mode : 'read',
+          selected_content_id : this.max_content_id
+        })
+      }.bind(this)}></CreateContent>
+    }else if (this.state.mode === 'update'){
+      console.log('mode = update');
+      _content = this.getReadContent();
+      _article = <UpdateContent data={_content} onSubmit={
+        function(_id, _title, _desc){
+        var _contents = Array.from(this.state.contents);
+        var i = 0;
+        while(i < _contents.length){
+          if(_contents[i].id === _id){
+            _contents[i] = {id : _id , title : _title, desc : _desc}
+            break;
+          }
+          i+=1;
         }
-        i+=1;
-      }
+        this.setState({
+          contents:_contents,
+          mode : 'read '
+        })
+
+      }.bind(this)}></UpdateContent>
     }
+    return _article;
+  }
+  render(){
+    console.log("App Render!!");
+    
     return (
       <div className="App">
         {/* <h1>Hello World!</h1>
@@ -90,11 +145,32 @@ class App extends Component{
           });
         }.bind(this)}
         data={this.state.contents}></TOC>
-        {/* <Content 
-          title="HTML"
-          desc="HTML is HyperText Markup Language" >
-        </Content> */}
-        <Content title={_title} desc={_desc}></Content>
+        <Control onChangeMode={function(_mode){
+          if(_mode === 'delete'){
+            if(window.confirm('really? do you want delete?  ')){
+              var _contents = Array.from(this.state.contents);
+              var i = 0 ;
+              while(i < this.state.contents.length){
+                if(_contents[i].id === this.state.selected_content_id){
+                  _contents.splice(i,1);
+                  break;
+                }
+                i+=1;
+              }
+              this.setState({
+                mode : 'welcome',
+                contents:_contents
+              });
+              alert('delete complete!');
+            }
+          } else{
+            this.setState({
+              mode: _mode
+            });
+          }
+           
+        }.bind(this)}></Control>
+        {this.getContent()}
       </div>  
     );
   }
